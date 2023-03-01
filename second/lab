@@ -1,15 +1,23 @@
-.686
-.model flat,stdcall
-.stack 100h
-.data
-x dw 13DD
-y dw 715F
-z dw 02FE
-.code
-ExitProcess PROTO STDCALL :DWORD
-Start:
-move ax,x
-add ax, 007d
-exit:
-Invoke ExitProcess,1
-End Start
+#include <iostream>
+short bl(unsigned short M, unsigned short Z){
+	return M / 2 + (Z & 0x09AB);}
+short ml(unsigned short M){
+	return M - 0x019B - 0xCF;}
+int main()
+{
+	unsigned short X = 0x13DD, Y = 0x715F, Z = 0x02FE;
+	unsigned short Xa = Y, count = 3;
+	while (count!=0){
+		Xa -= Z;
+		count--;}
+	unsigned short M,R;
+	M = Xa + X;
+	if (M > 0x0F99)
+		R = bl(M,Z);
+	else
+		R = ml(M);
+	if (R > 0)
+		R++;
+	else if (R < 0)
+		R--;
+}
