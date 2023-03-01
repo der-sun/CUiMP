@@ -1,20 +1,26 @@
-        push    rbp
-        mov     rbp, rsp
-        mov     DWORD PTR [rbp-4], 17
-        mov     DWORD PTR [rbp-8], 5
-        mov     DWORD PTR [rbp-12], 44
-        mov     eax, DWORD PTR [rbp-12]
-        sub     eax, DWORD PTR [rbp-4]
-        sub     eax, DWORD PTR [rbp-8]
-        mov     edx, eax
-        shr     edx, 31
-        add     eax, edx
-        sar     eax
-        mov     edx, eax
-        mov     eax, DWORD PTR [rbp-4]
-        and     eax, DWORD PTR [rbp-8]
-        add     eax, edx
-        mov     DWORD PTR [rbp-16], eax
-        mov     eax, 0
-        pop     rbp
-        ret
+.686
+.model flat,stdcall
+.stack 100h
+.data
+x dw 17
+y dw 5
+z dw 44
+m dw ?
+.code
+ExitProcess PROTO STDCALL :DWORD
+Start:
+        mov     ax, z
+        sub     ax, x
+        sub     ax, y
+        mov     ax, ax
+        mov     bl, 2
+        div     bl
+        mov     cx, x
+        and     cx, y
+        add     cx, ax
+        mov     m, cx
+        mov     cx, 0
+        mov     ax, 0
+exit:
+Invoke ExitProcess,M
+End Start
